@@ -11,7 +11,7 @@ const {
 } = require("../controllers/todo.controller");
 const verifyToken = require("../middleware/auth");
 
-route.get("/", verifyToken, getAllTodo);
+route.get("/",getAllTodo);
 route.get("/:id", getTodoById);
 route.post("/", createTodo);
 route.put("/id", updateTodoById);

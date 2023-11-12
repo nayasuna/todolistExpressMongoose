@@ -14,7 +14,7 @@ const verifyToken = (req, res, next) => {
     
     next()
   } catch (error) {
-    res.status(400).json(error.message)
+    res.status(401).json(error.message)
   }
 }
 

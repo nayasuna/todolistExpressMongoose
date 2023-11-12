@@ -18,7 +18,7 @@ module.exports = {
       const token = jwt.sign({id: user._id, email: user.email}, process.env.JWT_KEY)
   
       res.json({
-        message: "login successfull",
+        message: "berhasil login",
         userId: user._id,
         token,
       })
