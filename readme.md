@@ -53,6 +53,12 @@ Installation in my project
   POST localhost:3000/auth/login
  ``` 
 
+ #### update user by id
+
+```http
+ PUT localhost:3000/users/6551490be29f6a1e33c33bce
+ ``` 
+
 
 Diatas beberapa contoh endpoint yang dapat digunakan.
 
