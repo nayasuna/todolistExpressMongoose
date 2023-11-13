@@ -57,10 +57,10 @@ module.exports = {
     User.findByIdAndDelete(id)
     .then(data => {
       if (!data) {
-        res.status(404).send({message: "Tidak dapat menghapus data"})
+        res.status(404).send({message: "Tidak dapat menghapus data user"})
       }
 
-      res.send({message: "Data berhasil di hapus"})
+      res.send({message: "Data user berhasil di hapus"})
     })
     .catch(err => res.status(500).send({message: err.message}))
   },

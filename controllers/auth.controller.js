@@ -13,16 +13,16 @@ module.exports = {
       if (!user) throw new Error("invalid user")
       
       // Check if the password is correct
+
+      /*console.log(user.password, userLogin.password); */
+      if (user.password !== userLogin.password) throw new Error("invalid user") 
       
-      /*console.log(user.password, userLogin.password);
-      if (user.password !== userLogin.password) throw new Error("invalid user") */
-      
-      if(!bcrypt.compareSync(password, user.password)) {
+      /*if(!bcrypt.compareSync(password, user.password)) {
         return res.status(401).json({message: "invalid user"})
-      }
+      } */
 
       // Generate a JWT token
-      const token = jwt.sign({id: user._id, email: user.email}, process.env.JWT_KEY)
+      const token = jwt.sign({id: user._id, email: user.email}, "h76dfh81diapd")
   
       res.json({
         message: "berhasil login",
@@ -36,7 +36,7 @@ module.exports = {
 
   regis:  async (req, res) => {
     try {
-      const {nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password, konfirmasi_password} = req.body;
+      const {nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password} = req.body;
 
       // Check If email already exist
       const user = await User.findOne({email: email});
@@ -48,7 +48,7 @@ module.exports = {
       // hash the password 
       const salt = bcrypt.genSaltSync(10);
       const hashedPassword = bcrypt.hashSync(password, salt);
-      const newUser = await User.create ({nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password, konfirmasi_password: hashedPassword});
+      const newUser = await User.create ({nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password: hashedPassword});
 
       res.status(201).json({message: "User registered successfully"});
     } catch(error) {
