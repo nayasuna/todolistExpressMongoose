@@ -57,4 +57,6 @@ Installation in my project
 Diatas beberapa contoh endpoint yang dapat digunakan.
 
 
+## Deployment
 
+https://jade-weary-foal.cyclic.app/
