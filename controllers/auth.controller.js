@@ -11,7 +11,8 @@ module.exports = {
     try {
       const user = await User.findOne({email: userLogin.email})
       if (!user) throw new Error("invalid user")
-  
+      
+      // Check if the password is correct
       console.log(user.password, userLogin.password);
       if (user.password !== userLogin.password) throw new Error("invalid user")
   
@@ -27,15 +28,34 @@ module.exports = {
     }
   },
 
-  regis: (req, res) => {
-    let data = req.body
-    console.log(data);
+  regis:  async (req, res) => {
+    try {
+      const {nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password, konfirmasi_password} = req.body;
 
-    let saltRounds = 10
-    let hashPassword = bcrypt.hashSync(data.password, saltRounds)
+      // Check If email already exist
+      const user = await User.findOne({email: email});
 
-    data.password = hashPassword
+      if (user) {
+        return res.status(400).json({message: "User already exists"});
+      }
 
-    console.log(data);
+      // hash the password 
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+      const newUser = await User.create ({nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password, konfirmasi_password: hashedPassword});
+
+      res.status(201).json({message: "User registered successfully"});
+    } catch(error) {
+      res.status(500).json({error: "Error creating user"});
+    }
+          /* let data = req.body
+          console.log(data);
+
+          let saltRounds = 10
+          let hashPassword = bcrypt.hashSync(data.password, saltRounds)
+
+          data.password = hashPassword
+
+          console.log(data); */
   }
-}
+};
