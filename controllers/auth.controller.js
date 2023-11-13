@@ -13,9 +13,15 @@ module.exports = {
       if (!user) throw new Error("invalid user")
       
       // Check if the password is correct
-      console.log(user.password, userLogin.password);
-      if (user.password !== userLogin.password) throw new Error("invalid user")
-  
+      
+      /*console.log(user.password, userLogin.password);
+      if (user.password !== userLogin.password) throw new Error("invalid user") */
+      
+      if(!bcrypt.compareSync(password, user.password)) {
+        return res.status(401).json({message: "invalid user"})
+      }
+
+      // Generate a JWT token
       const token = jwt.sign({id: user._id, email: user.email}, process.env.JWT_KEY)
   
       res.json({
