@@ -45,10 +45,21 @@ module.exports = {
     })
   },
 
-  updateTodoById: (req, res) => {
+  updateTodoById:  async (req, res) => {
+    const id = req.params.id
+    const payload = req.body
 
-
-  },
+    Todo.findByIdAndUpdate(id, payload, (err, doc) => {
+      if(err) {
+        res.json({
+          message: "gagal update data todo dengan id ${id}"
+      })
+    }
+    res.json({
+      message: "berhasil ubah data id ${id}"
+    })
+  });
+},
 
   deleteTodoById: (req, res) => {
     const id = req.params.id;
