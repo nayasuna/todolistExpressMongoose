@@ -10,11 +10,30 @@ module.exports = {
     })
   },
 
-  getTodoById: (req, res) => {
-    Todo.findById(id)
+  getTodoById: async (req, res) => {
+     try {
+        // Ambil ID todo dari parameter rute
+    const todoId = req.params.id;
+
+    // Cari todo berdasarkan ID
+    const todo = await Todo.findById(todoId);
+
+    // Periksa apakah todo ditemukan
+    if (!todo) {
+      return res.status(404).json({ message: 'Todo not found' });
+    }
+
+    // Kirim todo sebagai respons
+    res.json(todo);
+  } catch (error) {
+    console.error('Error getting todo by ID:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+
+  /*Todo.findById(id)
     .then(data => res.send(data))
-    .catch(err => res.status(500). send({message: err.message}))
-  },
+    .catch(err => res.status(500). send({message: err.message})) */
+ },
 
   createTodo: async (req, res) => {
     let data = req.body
