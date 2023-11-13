@@ -22,7 +22,7 @@ module.exports = {
       } */
 
       // Generate a JWT token
-      const token = jwt.sign({id: user._id, email: user.email}, "h76dfh81diapd")
+      const token = jwt.sign({id: user._id, email: user.email}, process.env.JWT_KEY)
   
       res.json({
         message: "berhasil login",
