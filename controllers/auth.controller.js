@@ -36,7 +36,7 @@ module.exports = {
 
   regis:  async (req, res) => {
     try {
-      const {nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password} = req.body;
+      const {nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password, konfirmasi_password} = req.body;
 
       // Check If email already exist
       const user = await User.findOne({email: email});
@@ -48,7 +48,7 @@ module.exports = {
       // hash the password 
       const salt = bcrypt.genSaltSync(10);
       const hashedPassword = bcrypt.hashSync(password, salt);
-      const newUser = await User.create ({nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password: hashedPassword});
+      const newUser = await User.create ({nama_lengkap, username, jenis_kelamin, tanggal_lahir, tempat_lahir, alamat, email, password, konfirmasi_password: hashedPassword});
 
       res.status(201).json({message: "User registered successfully"});
     } catch(error) {
